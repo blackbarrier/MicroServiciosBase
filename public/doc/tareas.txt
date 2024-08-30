@@ -1,0 +1,25 @@
+-Completar menu con las siguientes categorias:
+
+LOGISTICA:
+Admin de productos
+Inventario Consulta
+    -Cargar stock.
+Proovedores
+
+VENTAS:
+Registrar ventas
+    -Vender
+    -Cancelar venta/ADMIN
+Cierre de caja
+    -Resumen de producotos vendidos
+
+PERSONAL:
+ABM Empleados
+Control de asistencias.
+
+
+
+
+FINANZAS: A DESARROLLAR MAS ADELANTE
+
+
