@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Productos{% endblock %}
+
+{# {% block stylesheets %}
+{{parent()}}
+{% endblock %} #}
+
+
+{% block pageHeader %}
+<div class="card-block">
+    <h5 class="m-b-10">Productos</h5>
+    <p class="text-muted m-b-10">Administre los productos existente. Agrege nuevos o elimine obsoletos.</p>
+    {# <ul class="breadcrumb-title b-t-default p-t-10">
+        <li class="breadcrumb-item">
+            <a href="index.html"> <i class="fa fa-home"></i> </a>
+        </li>
+        <li class="breadcrumb-item"><a href="#!">Comunicarse soporte</a>
+        </li>
+    </ul> #}
+</div>
+
+{% endblock %}
+
+
+{% block pageBody %}
+
+<div class="card">
+    
+    <div class="card-header">
+        {# <h5>Product List</h5> #}
+        <a href="{{path('app_producto_new')}}"><button type="button" class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger"
+        data-modal="modal-13"> <i class="icofont icofont-plus m-r-5"></i> Agregar producto</button></a>
+    </div>
+    
+    <div class="card-block">
+        <table id="tablaProducto" class="table table-striped dt-responsive nowrap dataTable no-footer dtr-inline collapsed">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Imagen</th>                  
+                    <th>Código</th>                  
+                    <th>Nombre</th>                  
+                    <th>Precio</th>                  
+                    <th>Stock</th>                  
+                    <th>Modificar</th>                  
+                </tr>
+            </thead>
+
+            <tbody>
+
+                
+                {% for producto in productos %}
+                <tr>
+                    <td class="pro-list-img" tabindex="0">
+                        <div style="max-width:60px; max-height:60px">                
+                            {# <td>{{ producto.codigo }}</td> #}
+                            <img src="{{asset ('images/Productos/1.png')}}" class="img-fluid" alt="Imagen Prodcuto">                
+                        </div>
+                    </td>
+                    <td class="pro-list-img" tabindex="0">                              
+                            <td>{{ producto.codigo }}</td>
+                    </td>
+                    <td class="pro-name">
+                        <h6>{{ producto.nombre }}</h6>
+                        <span>{{ producto.descripcion }}</span>
+                    </td>
+                    <td>
+                        {{ producto.precio }}
+                    </td>
+                    <td>
+                        <label class="text-danger">{{ producto.stock }}</label>
+                        {# <label class="text-success">Mucho Stock</label>
+                        <label class="text-warning">Poco</label> #}
+                    </td>
+                    <td class="action-icon">
+                        <a href="{{ path('app_producto_edit', {'id': producto.id}) }}" class="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title=""
+                            data-original-title="Edit"><i class="icofont icofont-ui-edit"></i></a>
+                        <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title=""
+                            data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
+                    </td>
+                </tr>                
+                {% else %}
+                <tr>
+                    <td colspan="5">No se encontraron registros</td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+
+       </table>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    setTimeout(function () { 
+
+        $('#tablaProducto').DataTable({
+            "responsive": true,
+            "autoWidth": true,            
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrando _MENU_ productos",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                // "sInfo": "Mostrando productos del _START_ al _END_ de un total de _TOTAL_ productos",
+                "sInfo": '',
+                "sInfoEmpty": "Mostrando productos del 0 al 0 de un total de 0 productos",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ productos)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    // "sFirst": "Primero",
+                    // "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+    }, 100);
+</script>
+{% endblock %}

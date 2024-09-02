@@ -6,15 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/index')]
-class IndexController extends AbstractController
+
+#[Route('/inventario')]
+class InventarioController extends AbstractController
 {
-    #[Route('/', name: 'app_index')]
+    #[Route('/', name: 'app_inventario')]
     public function index(): Response
     {
-        // dd("lla");
-        return $this->render('index/index.html.twig', [
-            'controller_name' => 'IndexController',
-        ]);
+        return $this->render('logistica\inventario\index.html.twig');
     }
 }

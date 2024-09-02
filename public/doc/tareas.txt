@@ -17,9 +17,8 @@ PERSONAL:
 ABM Empleados
 Control de asistencias.
 
-
-
-
 FINANZAS: A DESARROLLAR MAS ADELANTE
 
 
+-----------------------
+Establecer Login (Primero superadmin) despues multirol.
