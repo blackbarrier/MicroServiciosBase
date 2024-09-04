@@ -35,7 +35,8 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{asset('HTML/Template/files/assets/css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('HTML/Template/files/assets/css/jquery.mCustomScrollbar.css')}}">
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('HTML/Template/files/bower_components/dataTablesNew/datatables.css')}}">
+    <!-- CDN Datatables que rompía. Ahora esta local. <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css"> -->
     {% endblock %}
 </head>
 <!-- Menu sidebar static layout -->
@@ -299,7 +300,7 @@
                                 </li>
  
                                 <li class=" ">
-                                    <a href="{{path('app_inventario')}}">
+                                    <a href="{{path('app_inventario_index')}}">
                                         <span class="pcoded-micon"><i class="ti-layers-alt"></i><b>S</b></span>
                                         <span class="pcoded-mtext">Inventario</span>
                                         <span class="pcoded-mcaret"></span>
@@ -385,13 +386,13 @@
                                     <div class="page-header card">
                                         {% block pageHeader %}                                        
                                             <div class="card-block">
-                                                <h5 class="m-b-10">Bienvenido</h5>
-                                                <p class="text-muted m-b-10">Le deseamos un buen día desde MicroServicios</p>
+                                                <h5 class="m-b-10">Reemplazame!</h5>
+                                                <p class="text-muted m-b-10">Reemplazame!</p>
                                                 <ul class="breadcrumb-title b-t-default p-t-10">
                                                     <li class="breadcrumb-item">
                                                         <a href="index.html"> <i class="fa fa-home"></i> </a>
                                                     </li>
-                                                    <li class="breadcrumb-item"><a href="#!">Comunicarse con soporte técnico</a>
+                                                    <li class="breadcrumb-item"><a href="#!">Reemplazame!</a>
                                                     </li>                                               
                                                 </ul>
                                             </div>
@@ -401,22 +402,14 @@
                                         
                                     <!-- Page body start -->
                                     <div class="page-body"> 
-                                        {% block pageBody %}
-                                        
-                                            {# <div class="card">
-                                                <div class="card-block">                                                
-                                                    <span>
-                                                        
-                                                        Ejemplo1                                
-                                                    </span>
-                                                </div>       
-                                            </div> #}
-
+                                        {% block pageBody %}                                      
+                                            
                                             <div class="card">
                                                 <div class="card-block" style="margin: auto ">                                                
-                                                    <img src="images/company" alt="company.png">                          
+                                                    Reemplazame!                          
                                                 </div>       
                                             </div>
+                                            
                                         {% endblock %}
                                     </div>
                                     <!-- Page body end -->
@@ -503,7 +496,11 @@
     <!-- Custom js -->
     <script  src="{{asset('HTML/Template//files/assets/js/script.js')}}"></script>
     <!-- DataTables -->
-    <script  src="//cdn.datatables.net/2.1.5/js/dataTables.min.js')}}"></script>
+    <script  src="{{asset('HTML/Template/files/bower_components/dataTablesNew/datatables.js')}}"></script>
+    <!--CDN que rompía. Ahora esta local. <script  src="//cdn.datatables.net/2.1.5/js/dataTables.min.js"></script> -->
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     {% endblock %}
 </body>

@@ -6,12 +6,11 @@
 <div class="card-block">
     <div class="row">
         <div class="col">
-            <h5 class="m-b-10">Editar producto</h5>
-            <p class="text-muted m-b-10">Puede cambiar nombre, descripcion, precio y código. Para cargar stock dirigase
-                al manú de Inventario.</p>
+            <h5 class="m-b-10">Cargar stock de producto</h5>
+            <p class="text-muted m-b-10">Ingrese </p>
         </div>
         <div class="col d-flex justify-content-end">
-            <a href="{{path('app_producto_index')}}"><button type="button"
+            <a href="{{path('app_inventario_index')}}"><button type="button"
                     class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger"
                     data-modal="modal-13">
                     <i class="fa fa-mail-reply"></i>Volver</button></a>
@@ -35,7 +34,7 @@
     <div class="card-block">
         {# {{ include('logistica/producto/_form.html.twig') }} #}
 
-        {{ include('logistica/producto/_form.html.twig', {'button_label': 'Editar'}) }}
+        {{ include('logistica/inventario/_form.html.twig', {'button_label': 'Editar'}) }}
         
         {# <a href="{{ path('app_producto_index') }}">Volver</a> #}
         

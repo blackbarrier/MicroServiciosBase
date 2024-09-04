@@ -1,0 +1,36 @@
+{{ form_start(form) }}
+
+<div class="col align-items-center">
+    <p><b>Stock actual: ${stock} unidades</b></p>
+</div>
+<div class="form-group col align-items-center">
+    <div class="d-flex row align-items-center">
+        <div class=col>
+        </div>
+        <div class=col-4>
+            <input type="number" class="form-control form-control-round" placeholder="Agregar" id="inputStock"
+                oninput="onStockChange(this.value, ${stock})">
+        </div>
+        <div class=col>
+        </div>
+    </div>
+</div>
+<div class="col align-items-center">
+    <h4 id="total">Total: 50 unidades<h4>
+</div>
+
+<hr>
+
+<div class="row justify-content-center p-t-20">
+    <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+        <button type="submit" id="btn-form-carga-usuario" class="btn btn-primary btn-block">
+            <i class="ti-save"></i> Guardar</button>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+        <a class="btn btn-secondary btn-block" href="{{ path('app_inventario_index') }}">
+            <i class="ti-share"></i> Volver</a>
+    </div>
+</div>
+
+    {# <button class="btn">{{ button_label|default('Save') }}</button> #}
+{{ form_end(form) }}

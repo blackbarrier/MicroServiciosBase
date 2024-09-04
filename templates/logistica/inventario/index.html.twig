@@ -24,116 +24,70 @@
 
 
 {% block pageBody %}
-
 <div class="card">
-    
+
     <div class="card-header">
-        {# <h5>Product List</h5> #}
-        <button type="button" class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger"
-        data-modal="modal-13"> <i class="icofont icofont-plus m-r-5"></i> Agregar stock</button>
+        <h5>Seleccione el producto a consultar</h5>
+        {# <a href="{{path('app_producto_new')}}"><button type="button"
+                class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger" data-modal="modal-13">
+                <i class="icofont icofont-plus m-r-5"></i> Agregar nuevo producto</button></a> #}
     </div>
-    
+
     <div class="card-block">
-        {# <table id="tablaProducto" class="table table-striped dt-responsive nowrap dataTable no-footer dtr-inline collapsed">
+        <table id="tablaInventario" class="table">
+            
             <thead>
-                <tr>
-                    <th></th>
+                <tr>                    
+                    <th>Código</th>
                     <th>Nombre</th>                  
-                    <th>Precio</th>                  
-                    <th>Stock</th>                  
-                    <th>Modificar</th>                  
+                    <th>Stock</th>
+                    <th></th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr>
-                    <td class="pro-list-img" tabindex="0">                        
-                        <div style="max-width:60px; max-height:60px">
 
-                            <img src="images\Productos\1.png" class="img-fluid" alt="Imagen Prodcuto" >
 
-                        </div>                    
-                    </td>
-                    <td class="pro-name" >
-                        <h6>Producto imaginario</h6>
-                        <span>Descripcion del producto imaginario</span>
-                    </td>
-                    <td >
-                        $4056
-                    </td>
-                    <td >                       
-                     <label class="text-danger">Sin stock</label>
-                     <label class="text-success">Mucho Stock</label>
-                     <label class="text-warning">Poco</label>
+                {% for producto in productos %}
+                <tr>                   
+                    <td>{{ producto.codigo }}</td>
+                    <td class="pro-name">
+                        <h6>{{ producto.nombre }}</h6>
+                        <span>{{ producto.descripcion }}</span>
+                    </td>                  
+                    <td>
+                        {% if producto.stock > 20 %}
+
+                        <label class="text-success"><h4>{{producto.stock}}</h4></label>
+                        {% elseif producto.stock <= 20 and producto.stock !=0 %}
+                        <label class="text-warning"><h4>{{producto.stock}}</h4></label>                            
+                        {% elseif producto.stock == 0 %}
+                        <label class="text-danger"><h4>Sin stock</h4></label>
+                        {% endif %}
                     </td>
                     <td class="action-icon">
-                        <a href="#!" class="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title=""
-                            data-original-title="Edit"><i class="icofont icofont-ui-edit"></i></a>
-                        <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title=""
-                            data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
+                        <div class="row">
+                            <a href="#"><button type="button"
+                                    class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger" data-modal="modal-13"  onclick="modalCarga({{producto.stock}} , {{producto.id}} )">
+                                    <i class="icofont icofont-plus m-r-5"></i></button></a>
+                        </div>
                     </td>
                 </tr>
+                {% else %}
                 <tr>
-                    <td class="pro-list-img" tabindex="0">                        
-                        <div style="max-width:60px; max-height:60px">
-
-                            <img src="images\Productos\1.png" class="img-fluid" alt="Imagen Prodcuto" >
-
-                        </div>                    
-                    </td>
-                    <td class="pro-name" >
-                        <h6>Producto imaginario</h6>
-                        <span>Descripcion del producto imaginario</span>
-                    </td>
-                    <td >
-                        $4056
-                    </td>
-                    <td >                       
-                     <label class="text-danger">Sin stock</label>
-                     <label class="text-success">Mucho Stock</label>
-                     <label class="text-warning">Poco</label>
-                    </td>
-                    <td class="action-icon">
-                        <a href="#!" class="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title=""
-                            data-original-title="Edit"><i class="icofont icofont-ui-edit"></i></a>
-                        <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title=""
-                            data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
-                    </td>
+                    <td colspan="4">No se encontraron registros</td>
                 </tr>
-                <tr>
-                    <td class="pro-list-img" tabindex="0">                        
-                        <div style="max-width:60px; max-height:60px">
+                {% endfor %}
 
-                            <img src="images\Productos\1.png" class="img-fluid" alt="Imagen Prodcuto" >
-
-                        </div>                    
-                    </td>
-                    <td class="pro-name" >
-                        <h6>Producto imaginario</h6>
-                        <span>Descripcion del producto imaginario</span>
-                    </td>
-                    <td >
-                        $4056
-                    </td>
-                    <td >                       
-                     <label class="text-danger">Sin stock</label>
-                     <label class="text-success">Mucho Stock</label>
-                     <label class="text-warning">Poco</label>
-                    </td>
-                    <td class="action-icon">
-                        <a href="#!" class="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title=""
-                            data-original-title="Edit"><i class="icofont icofont-ui-edit"></i></a>
-                        <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title=""
-                            data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
-                    </td>
-                </tr>
             </tbody>
-       </table> #}
+
+        </table>
     </div>
 </div>
-
-
 {% endblock %}
+
+
+
 
 
 {% block javascripts %}
@@ -141,7 +95,7 @@
 <script>
     setTimeout(function () { 
 
-        $('#tablaProducto').DataTable({
+        $('#tablaInventario').DataTable({
             "responsive": true,
             "autoWidth": true,            
             "language": {
@@ -149,7 +103,7 @@
                 "sLengthMenu": "Mostrando _MENU_ productos",
                 "sZeroRecords": "No se encontraron resultados",
                 "sEmptyTable": "Ningún dato disponible en esta tabla",
-                // "sInfo": "Mostrando productos del _START_ al _END_ de un total de _TOTAL_ productos",
+                "sInfo": "Mostrando productos del _START_ al _END_ de un total de _TOTAL_ productos",
                 "sInfo": '',
                 "sInfoEmpty": "Mostrando productos del 0 al 0 de un total de 0 productos",
                 "sInfoFiltered": "(filtrado de un total de _MAX_ productos)",
@@ -171,5 +125,82 @@
             }
         });
     }, 100);
+</script>
+<script>   
+
+    function modalCarga(stock, productoId){
+     
+        Swal.fire({
+            title: "Agregar stock",
+            icon: "question",
+            html: 
+            `
+                        <div class="col align-items-center">
+                            <p><b>Stock actual: ${stock} unidades</b></p>
+                        </div>
+
+                        <div class="form-group col align-items-center">
+                            <div class="d-flex row align-items-center">
+                                    <div class=col>  
+                                    </div>
+                                    <div class=col-4>
+                                        <input type="number" class="form-control form-control-round" placeholder="Agregar" id="inputStock" oninput="onStockChange(this.value, ${stock})">                                    
+                                    </div>
+                                    <div class=col>    
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col align-items-center">
+                            <h4>
+                            <span>Total: </span>
+                            <span id="total">${stock}</span>
+                            <span> unidades</span>
+                            </h4>
+                        </div>                   
+                `,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: `Aceptar`,
+                        
+        }) .then((result) => {
+            if (result.isConfirmed) {
+
+                let agregado = parseInt(document.getElementById("inputStock").value);
+                let total = stock + agregado;
+
+                $.ajax({
+                    url: '{{path("app_inventario_carga")}}',  // Ruta a la que se enviarán los datos
+                    method: 'POST',                // Método HTTP que se usará (POST)
+                    data: {
+                        stock_actual: stock,
+                        stock_agregado: agregado,
+                        stock_total: total,
+                        productoId: productoId
+                    },
+                    success: function (response) {
+                        // Si la solicitud tiene éxito, redirecciona a otra página
+                        location.reload();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Manejo de errores
+                        console.error('Error al enviar los datos: ', textStatus, errorThrown);
+                    }
+                });
+
+            }
+        })       
+        ;
+
+    }
+
+    function onStockChange(agregado=0, stock) {
+        let total;
+        const agregadoValue = (agregado === "") ? 0 : parseInt(agregado) || 0; 
+        total = parseInt(stock) + parseInt(agregadoValue);
+        document.getElementById('total').innerHTML = total;        
+        console.log("Actual: "+stock+", Agregado: "+agregado+", Total:"+total);
+    };
+
 </script>
 {% endblock %}
