@@ -4,7 +4,7 @@ LOGISTICA:
 Admin de productos
 Inventario Consulta
     -Cargar stock.
-Proovedores
+Proveedores
 
 VENTAS:
 Registrar ventas

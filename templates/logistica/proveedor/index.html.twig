@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Proveedores{% endblock %}
+
+{# {% block stylesheets %}
+{{parent()}}
+{% endblock %} #}
+
+
+{% block pageHeader %}
+<div class="card-block">
+    <h5 class="m-b-10">Proveedores</h5>
+    <p class="text-muted m-b-10">Administre sus proveedores.</p>
+    {# <ul class="breadcrumb-title b-t-default p-t-10">
+        <li class="breadcrumb-item">
+            <a href="index.html"> <i class="fa fa-home"></i> </a>
+        </li>
+        <li class="breadcrumb-item"><a href="#!">Comunicarse soporte</a>
+        </li>
+    </ul> #}
+</div>
+
+{% endblock %}
+
+
+{% block pageBody %}
+
+<div class="card">
+
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                <h5>Listado de proveedores</h5>
+            </div>
+            <div class="col-2">                
+                <a href="{{path('app_proveedor_new')}}"><button type="button"
+                    class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger" data-modal="modal-13">
+                    <i class="icofont icofont-plus m-r-5"></i>Agregar proveedor</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-block">
+        <table id="tablaProveedor" class="table table-striped dt-responsive nowrap no-footer dtr-inline collapsed">
+            <thead>
+                <tr>
+                    <th>Proveedor</th>
+                    <th>Detalles</th>
+                    <th>CUIT</th>
+                    <th>Dirección</th>
+                    <th>Contacto</th>
+                    <th>Detalles</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for proveedor in proveedores %}
+                <tr>
+                    <td class="pro-list-img" tabindex="0">
+                        {{ proveedor.nombre }}
+                    </td>
+                    
+                    <td class="pro-name">
+                        <span>{{ proveedor.descripcion }}</span>
+                    </td>
+                    
+                    <td class="pro-name">
+                        <span>{{ proveedor.cuit }}</span>
+                    </td>
+                    
+                    <td class="dt-type-text">
+                        {{ proveedor.direccion }}
+                    </td>
+                    
+                    <td class="dt-type-text">
+                        +54 {{ proveedor.telefono }}
+                    </td>
+                    
+                    <td class="action-icon">
+                        <div class="row">
+                            <a href="{{ path('app_proveedor_edit', {'id': proveedor.id}) }}" class="m-r-15 text-muted" data-toggle="tooltip"
+                                data-placement="top" title="" data-original-title="Editar"><i class="icofont icofont-ui-edit"></i></a>
+                            <form method="post" action="{{ path('app_proveedor_delete', {'id': proveedor.id}) }}"
+                                onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ proveedor.id) }}">
+                                <button type="submit" class="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Eliminar" style="border: none; background-color: transparent"><i
+                                        class="icofont icofont-delete-alt"></i></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>                    
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    setTimeout(function () {
+
+        $('#tablaProveedor').DataTable({
+            "responsive": true,
+            "autoWidth": true,
+            "language": {
+                "sProcessing": "Procesando...",
+                // "sLengthMenu": "Mostrando _MENU_ productos",
+                "sLengthMenu": '',
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando productos del _START_ al _END_ de un total de _TOTAL_ productos",
+                "sInfo": '',
+                "sInfoEmpty": "Mostrando productos del 0 al 0 de un total de 0 productos",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ productos)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    // "sFirst": "Primero",
+                    // "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+    }, 100);
+</script>
+{% endblock %}

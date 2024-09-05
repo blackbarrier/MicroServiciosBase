@@ -1,0 +1,64 @@
+{{ form_start(form) }}
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    {{ form_label(form.nombre) }}
+                    {{ form_widget(form.nombre) }}
+                    {{ form_errors(form.nombre) }}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    {{ form_label(form.descripcion) }}
+                    {{ form_widget(form.descripcion) }}
+                    {{ form_errors(form.descripcion) }}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    {{ form_label(form.cuit) }}
+                    {{ form_widget(form.cuit) }}
+                    {{ form_errors(form.cuit) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    {{ form_label(form.telefono) }}
+                    {{ form_widget(form.telefono) }}
+                    {{ form_errors(form.telefono) }}
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-group">
+                    {{ form_label(form.direccion) }}
+                    {{ form_widget(form.direccion) }}
+                    {{ form_errors(form.direccion) }}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="row justify-content-center p-t-20">
+    <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+        <button type="submit" id="btn-form-carga-usuario" class="btn btn-primary btn-block">
+            <i class="ti-save"></i> Guardar</button>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+        <a class="btn btn-secondary btn-block" href="{{ path('app_proveedor_index') }}">
+            <i class="ti-share"></i> Volver</a>
+    </div>
+</div>
+{{ form_end(form) }}

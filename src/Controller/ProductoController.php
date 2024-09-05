@@ -44,13 +44,13 @@ class ProductoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_producto_show', methods: ['GET'])]
-    public function show(Producto $producto): Response
-    {
-        return $this->render('logistica/producto/show.html.twig', [
-            'producto' => $producto,
-        ]);
-    }
+    // #[Route('/{id}', name: 'app_producto_show', methods: ['GET'])]
+    // public function show(Producto $producto): Response
+    // {
+    //     return $this->render('logistica/producto/show.html.twig', [
+    //         'producto' => $producto,
+    //     ]);
+    // }
 
     #[Route('/{id}/edit', name: 'app_producto_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Producto $producto, EntityManagerInterface $entityManager): Response
