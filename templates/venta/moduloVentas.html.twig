@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Proveedores{% endblock %}
+
+{# {% block stylesheets %}
+{{parent()}}
+{% endblock %} #}
+
+
+{% block pageHeader %}
+<div class="card-block">
+    <h5 class="m-b-10">Ventas</h5>
+    <p class="text-muted m-b-10">Puede registrar sus ventas</p>
+    {# <ul class="breadcrumb-title b-t-default p-t-10">
+        <li class="breadcrumb-item">
+            <a href="index.html"> <i class="fa fa-home"></i> </a>
+        </li>
+        <li class="breadcrumb-item"><a href="#!">Comunicarse soporte</a>
+        </li>
+    </ul> #}
+</div>
+
+{% endblock %}
+
+
+{% block pageBody %}
+
+<div class="card">
+
+    {# <div class="card-header">
+        <div class="row">
+            <div class="col">
+                <h5>Modulo de ventas</h5>
+            </div>
+            <div class="col-2">
+                <a href="{{path('app_proveedor_new')}}"><button type="button"
+                        class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger"
+                        data-modal="modal-13">
+                        <i class="icofont icofont-plus m-r-5"></i>Agregar proveedor</button>
+                </a>
+            </div>
+        </div>
+    </div> #}
+
+    <div class="card-block">
+        {# <div class="card"> #}
+        <div class="row">
+            <div class="col-4">
+                <input type="text" class="form-control" placeholder="Código de barras" id="inputCodigo">
+            </div>
+            <div class="col-4">                    
+                <select class="form-control" name="select" id="productSelect">
+                    <option value="opt1">Seleccione producto</option>
+                    {% for producto in productos %}
+                    <option value="{{producto.id}}" onclick="select()">{{producto.nombre}} - {{producto.codigo}}</option>                        
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-2">
+                <input type="text" class="form-control" placeholder="Cantidad">
+            </div>            
+            <div class="col-2">
+                <button type="text" class="form-control btn btn-primary">Agregar</button>
+            </div>
+        </div>
+        
+
+        <br>
+        <br>
+        <br>
+
+        <table id="tablaVentas" class="table table-hover dt-responsive nowrap no-footer dtr-inline collapsed">
+            <thead>
+                <tr>
+                    <th>Cod.</th>
+                    <th>Nombre</th>
+                    <th>Cant.</th>
+                    <th>Precio</th>                 
+                </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                    <td>
+                        <span>1225344314</span>                        
+                    </td>
+
+                    <td class="pro-name">
+                        <span>Tu vieja en tanga</span>
+                    </td>
+
+                    <td class="dt-type-text">
+                        <span>3</span>
+                    </td>
+
+                    <td class="dt-type-text">
+                        <span>$1546</span>
+                    </td>
+                    
+                </tr>
+            
+         
+            </tbody>
+        </table>
+        {# </div> #}
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    setTimeout(function () {
+
+        $('#tablaProveedor').DataTable({
+            "responsive": true,
+            "autoWidth": true,
+            "language": {
+                "sProcessing": "Procesando...",
+                // "sLengthMenu": "Mostrando _MENU_ productos",
+                "sLengthMenu": '',
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando productos del _START_ al _END_ de un total de _TOTAL_ productos",
+                "sInfo": '',
+                "sInfoEmpty": "Mostrando productos del 0 al 0 de un total de 0 productos",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ productos)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    // "sFirst": "Primero",
+                    // "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+    }, 100);
+</script>
+<script>
+
+    function select() {
+        var selectElement = document.getElementById('productSelect');
+        var selectedValue = selectElement.value;
+        console.log('Selected product ID:', selectedValue);
+        // You can add more functionality here based on the selected value
+    }
+
+    // function select() {
+    //     //al hacer click en un producto
+    //     //escribir en el input de al lado su codigo        
+    // }     
+
+
+
+</script>
+{% endblock %}

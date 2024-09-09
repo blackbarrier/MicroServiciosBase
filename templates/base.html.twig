@@ -37,6 +37,16 @@
     <link rel="stylesheet" type="text/css" href="{{asset('HTML/Template/files/assets/css/jquery.mCustomScrollbar.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('HTML/Template/files/bower_components/dataTablesNew/datatables.css')}}">
     <!-- CDN Datatables que rompía. Ahora esta local. <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css"> -->
+    <!-- Select2-->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        /* #select2-select-hi-container {
+            height:34px;
+        }
+         #select2-select-hi-container > .select2-selection__arrow{
+            height:34px;
+        } */
+    </style>
     {% endblock %}
 </head>
 <!-- Menu sidebar static layout -->
@@ -321,7 +331,7 @@
                             <ul class="pcoded-item pcoded-left-item">                            
  
                                 <li class=" ">
-                                    <a href="#">
+                                    <a href="{{path('app_venta_index')}}">
                                         <span class="pcoded-micon"><i class="ti-layers-alt"></i><b>S</b></span>
                                         <span class="pcoded-mtext">Modulo venta</span>
                                         <span class="pcoded-mcaret"></span>
@@ -501,6 +511,9 @@
     
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
     {% endblock %}
 </body>
