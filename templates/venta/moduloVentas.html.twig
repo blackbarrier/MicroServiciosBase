@@ -50,17 +50,17 @@
             </div>
             <div class="col-4">                    
                 <select class="form-control" name="select" id="productSelect">
-                    <option value="opt1">Seleccione producto</option>
+                    <option value="">Seleccione producto</option>
                     {% for producto in productos %}
-                    <option value="{{producto.id}}" onclick="select()">{{producto.nombre}} - {{producto.codigo}}</option>                        
+                    <option value="{{producto.codigo}}" >{{producto.nombre}}</option>                        
                     {% endfor %}
                 </select>
             </div>
             <div class="col-2">
-                <input type="text" class="form-control" placeholder="Cantidad">
+                <input type="number" min="1" class="form-control" placeholder="Cantidad" id="cantidad" value="1">
             </div>            
             <div class="col-2">
-                <button type="text" class="form-control btn btn-primary">Agregar</button>
+                <button type="text" class="form-control btn btn-primary" id="botonAgregar">Agregar</button>
             </div>
         </div>
         
@@ -75,32 +75,19 @@
                     <th>Cod.</th>
                     <th>Nombre</th>
                     <th>Cant.</th>
-                    <th>Precio</th>                 
+                    <th>Precio unitario</th>                 
+                    <th>Subtotal</th>                 
+                    <th></th>                 
                 </tr>
             </thead>
-            <tbody>
-              
-                <tr>
-                    <td>
-                        <span>1225344314</span>                        
-                    </td>
-
-                    <td class="pro-name">
-                        <span>Tu vieja en tanga</span>
-                    </td>
-
-                    <td class="dt-type-text">
-                        <span>3</span>
-                    </td>
-
-                    <td class="dt-type-text">
-                        <span>$1546</span>
-                    </td>
-                    
-                </tr>
-            
-         
+            <tbody id="productList">         
             </tbody>
+            <tfoot>
+                <tr colspan="6"> </tr>
+                <tr>                    
+                    <th colspan="6" id="totalVenta" style="text-align: right;"></th>
+                </tr>
+            </tfoot>
         </table>
         {# </div> #}
 
@@ -152,19 +139,104 @@
 </script>
 <script>
 
-    function select() {
-        var selectElement = document.getElementById('productSelect');
-        var selectedValue = selectElement.value;
-        console.log('Selected product ID:', selectedValue);
-        // You can add more functionality here based on the selected value
+    document.addEventListener('DOMContentLoaded', function () {
+        const selectElement = document.getElementById('productSelect');
+        const inputCodigo = document.getElementById('inputCodigo');
+        const optionsArray = [];
+            //Opciones del select
+            for (let i = 0; i < selectElement.options.length; i++) {
+                optionsArray.push({
+                    value: selectElement.options[i].value,
+                });
+            }
+
+        selectElement.addEventListener('change', function () {
+            const selectedValue = selectElement.value;
+
+            if (selectedValue) {              
+                inputCodigo.value = selectedValue;
+                // You can perform additional actions here, such as updating the UI or making an AJAX call
+            } else {
+                inputCodigo.value = null;
+            }
+        });
+
+        inputCodigo.addEventListener('input', function () {
+            selectElement.value = "";
+            optionsArray.forEach((option) => {
+                if(inputCodigo.value == option.value && option.value!=""){
+                    selectElement.value = inputCodigo.value;
+                }
+            }); 
+        });
+
+        
+
+    });
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var productos;    
+            
+        $.ajax({
+            url: "{{ path('app_venta_ajax_producto') }}",
+            method: 'POST',
+            // data: {"id":variable},
+            dataType: 'json',
+            success: function (response) {
+                productos = response;
+                // console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+
+        const inputCodigo = document.getElementById('inputCodigo');
+        const botonAgregar = document.getElementById('botonAgregar');
+        const tbody = document.getElementById('productList');
+        const cantidad = document.getElementById('cantidad');        
+        const totalVenta = document.getElementById('totalVenta'); 
+        const botonEliminar = document.getElementById('botonEliminar'); 
+        var total=0      
+        
+        botonAgregar.addEventListener('click', function () {          
+            
+            
+            for (let i = 0; i < productos.length; i++) {
+                if(productos[i].codigo == inputCodigo.value){
+                    
+                    let nuevaFila = `
+                        <tr id="${productos[i].id}">
+
+                            <td>${productos[i].codigo}</td>
+                            <td>${productos[i].nombre}</td>
+                            <td>${cantidad.value}</td>
+                            <td>$${productos[i].precio}</td>
+                            <td>$${parseInt(productos[i].precio) * cantidad.value}</td>
+                            <td>
+                                <button class="m-r-15 text-muted" data-original-title="Eliminar" style="border: none; background-color: transparent" onclick="eliminar(${productos[i].id})"">
+                                    <i style="border: none; background-color: transparent; outline: none;" class="icofont icofont-delete-alt">
+                                    </i>
+                                </button>
+                            </td>                            
+                        </tr>
+                    `;
+                    tbody.innerHTML += nuevaFila;
+                    total+= (productos[i].precio) * cantidad.value;
+                    totalVenta.innerHTML = "<h4>Total: $"+total+"</h4>"
+                };
+            }            
+        });  
+        
+
+    });
+
+    function eliminar(id){
+        let fila = document.getElementById(id)
+        fila.remove();
     }
-
-    // function select() {
-    //     //al hacer click en un producto
-    //     //escribir en el input de al lado su codigo        
-    // }     
-
-
 
 </script>
 {% endblock %}
