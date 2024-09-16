@@ -17,11 +17,9 @@ class ProveedorController extends AbstractController
     #[Route('/', name: 'app_proveedor_index', methods: ['GET'])]
     public function index(ProveedorRepository $proveedorRepository): Response
     {
-
         return $this->render('logistica/proveedor/index.html.twig', [
             'proveedores' => $proveedorRepository->findAll(),
         ]);
-
 
     }
 

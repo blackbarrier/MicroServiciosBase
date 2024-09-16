@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Producto;
 use App\Repository\ProductoRepository;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,5 +30,21 @@ class VentaController extends AbstractController
     {
         $productos = $productoRepository->findAll();
         return $this->json($productos);        
+    }
+
+    #[Route('/registrarVenta', name: 'app_registrar_venta_ajax', methods: ['POST'])]
+    public function registrarVenta(Request $request, ProductoRepository $productoRepository)
+    {
+        $carrito = $request->get('carrito');
+
+        foreach ($carrito as $item) {
+            $producto = $productoRepository->find($item["producto"]["id"]);
+            $cantidadVendida = $item["cantidad"];
+            $producto->bajarStock($cantidadVendida);
+
+            $productoRepository->agregar($producto, true);
+            //Sumar ingresos(despues)
+        }
+        return $this->json($carrito);
     }
 }

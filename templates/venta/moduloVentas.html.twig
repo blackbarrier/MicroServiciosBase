@@ -82,14 +82,28 @@
             </thead>
             <tbody id="productList">         
             </tbody>
-            <tfoot>
-                <tr colspan="6"> </tr>
-                <tr>                    
-                    <th colspan="6" id="totalVenta" style="text-align: right;"></th>
+            {# <tfoot>                        
+                <tr>
+                    <th></th>                   
+                    <th></th>                   
+                    <th></th> 
+                    <th></th> 
+                    <th id="totalVenta" style="text-align: left;"></th>
+                    <th><button type="text" class="form-control btn btn-primary" id="botonFinalizar">Cobrar</button></th>                   
                 </tr>
-            </tfoot>
+            </tfoot> #}
         </table>
         {# </div> #}
+        <br>
+        <br>
+        <br>
+        <hr>
+
+        <div class="row" style="align-items: center;">
+            <div class="col-8"></div>
+            <div class="col-2" id="totalVenta"><h4>Total: $0</h4></div>
+            <div class="col-2"><button type="text" class="form-control btn btn-primary" id="botonFinalizar">Cobrar</button></div>
+        </div>
 
     </div>
 
@@ -149,13 +163,11 @@
                     value: selectElement.options[i].value,
                 });
             }
-
         selectElement.addEventListener('change', function () {
             const selectedValue = selectElement.value;
 
             if (selectedValue) {              
                 inputCodigo.value = selectedValue;
-                // You can perform additional actions here, such as updating the UI or making an AJAX call
             } else {
                 inputCodigo.value = null;
             }
@@ -168,17 +180,36 @@
                     selectElement.value = inputCodigo.value;
                 }
             }); 
-        });
-
-        
+        });       
 
     });
 
 </script>
 <script>
+    var carrito =[]
+    function agregarCarrito(indiceFila, producto, cantidad){
+        var producto = {
+            indiceFila: indiceFila,
+            producto: producto,
+            cantidad: cantidad
+        };  
+        carrito.push(producto);
+        console.log("Agregado ", carrito);      
+        
+    };
+    function eliminarCarrito(indiceFila){
+        carrito = carrito.filter(item => item.indiceFila !== indiceFila)
+        console.log("Removido ", carrito);      
+    };
+
+</script>
+<script>
+
     document.addEventListener('DOMContentLoaded', function () {
-        var productos;    
-            
+        
+
+        //Carga de productos existentes.
+        var productos; 
         $.ajax({
             url: "{{ path('app_venta_ajax_producto') }}",
             method: 'POST',
@@ -192,51 +223,111 @@
                 console.error('Error:', error);
             }
         });
-
         const inputCodigo = document.getElementById('inputCodigo');
         const botonAgregar = document.getElementById('botonAgregar');
         const tbody = document.getElementById('productList');
-        const cantidad = document.getElementById('cantidad');        
-        const totalVenta = document.getElementById('totalVenta'); 
-        const botonEliminar = document.getElementById('botonEliminar'); 
-        var total=0      
-        
-        botonAgregar.addEventListener('click', function () {          
-            
-            
+        const cantidad = document.getElementById('cantidad');
+        var indiceFila =0;   
+
+        //Agrega una fila HTML con el producto seleccionado.
+        //Agrega un producto al carrito
+        //Llama a la funcion actualizarTotal()
+        botonAgregar.addEventListener('click', function () {
             for (let i = 0; i < productos.length; i++) {
                 if(productos[i].codigo == inputCodigo.value){
-                    
-                    let nuevaFila = `
-                        <tr id="${productos[i].id}">
-
+                    if (cantidad.value >= 1){ //Evita poner numeros negativos en cantidad
+                        indiceFila+=1;
+                        let subtotal = parseInt(productos[i].precio) * cantidad.value;  
+                        let nuevaFila = `
+                        <tr class="nuevaFila" id="${indiceFila}">                            
                             <td>${productos[i].codigo}</td>
                             <td>${productos[i].nombre}</td>
                             <td>${cantidad.value}</td>
                             <td>$${productos[i].precio}</td>
-                            <td>$${parseInt(productos[i].precio) * cantidad.value}</td>
+                            <td class="subtotal">$${subtotal}</td>
                             <td>
-                                <button class="m-r-15 text-muted" data-original-title="Eliminar" style="border: none; background-color: transparent" onclick="eliminar(${productos[i].id})"">
+                                <button class="m-r-15 text-muted" data-original-title="Eliminar" style="border: none; background-color: transparent" onclick="eliminarFila(${indiceFila})"">
                                     <i style="border: none; background-color: transparent; outline: none;" class="icofont icofont-delete-alt">
                                     </i>
                                 </button>
                             </td>                            
                         </tr>
-                    `;
-                    tbody.innerHTML += nuevaFila;
-                    total+= (productos[i].precio) * cantidad.value;
-                    totalVenta.innerHTML = "<h4>Total: $"+total+"</h4>"
+                        `;
+                        tbody.innerHTML += nuevaFila;                        
+                        agregarCarrito(indiceFila, productos[i], cantidad.value);
+                    }else{
+                        alert("Cantidad incorrecta")
+                    }
                 };
             }            
-        });  
-        
+            actualizarTotal();                
+        });         
 
+    });   
+
+    
+    const botonFinalizar = document.getElementById("botonFinalizar");
+    botonFinalizar.addEventListener("click", function () {
+        total = actualizarTotal();
+        if (total!=0){      
+                alert("enviado");      
+                $.ajax({
+                url: "{{ path('app_registrar_venta_ajax') }}",
+                method: 'POST',
+                data: {"carrito":carrito, "total":total},
+                dataType: 'json',
+                success: function (response) {                
+                    console.log("Orden de compra: ",response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
     });
 
-    function eliminar(id){
-        let fila = document.getElementById(id)
-        fila.remove();
-    }
+    
+</script>
+<script>
+     //Funcion que elimina la fila HTML        
+        function eliminarFila(indiceFila) {
+            // console.log("llegando");
+            eliminarCarrito(indiceFila);
+            let fila = document.getElementById(indiceFila)
+            fila.remove();
+            actualizarTotal();
+        }
 
+    //Actualiza el campo Total HTML        
+        function actualizarTotal() {
+            let total = 0;
+            const totalVenta = document.getElementById('totalVenta');
+            const filas = document.querySelectorAll('tbody tr.nuevaFila');
+
+            filas.forEach(fila => {
+                const celdaSubtotal = fila.querySelector('.subtotal');
+                const subtotal = parseInt(celdaSubtotal.textContent.slice(1));
+                total += subtotal;
+
+            });
+            // Mostrar el total
+            totalVenta.innerHTML = "<h4>Total: $" + total + "</h4>"
+            return total
+        }
+    
+</script>
+<script>
+
+    //EnterDetect
+    const inputFields = ['inputCodigo', 'cantidad', 'productSelect'];
+
+    inputFields.forEach(fieldId => {
+        document.getElementById(fieldId).addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('botonAgregar').click();
+            }
+        });
+    });
+        
 </script>
 {% endblock %}

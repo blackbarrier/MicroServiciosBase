@@ -16,6 +16,14 @@ class ProductoRepository extends ServiceEntityRepository
         parent::__construct($registry, Producto::class);
     }
 
+    public function agregar(Producto $producto, bool $flush)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($producto);
+        if ($flush) {
+            $em->flush();
+        }
+    }
     
 
     //    /**
