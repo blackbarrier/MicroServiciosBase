@@ -11,7 +11,16 @@ Registrar ventas
     -Vender
     -Cancelar venta/ADMIN
 Cierre de caja
+
+
+
+
     -Resumen de producotos vendidos
+    -Registrar instancia de entidad VENTA al confiramr venta. Contendra una coleccion de productos, montoTotal, FechayHora. Debe ser llamada al cerrar la caja.
+    -(Luego las ventas servirar para el modulo FINANZAS)
+
+
+
 
 PERSONAL:
 ABM Empleados

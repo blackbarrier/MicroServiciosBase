@@ -16,6 +16,15 @@ class RegistroVentaRepository extends ServiceEntityRepository
         parent::__construct($registry, RegistroVenta::class);
     }
 
+    public function agregar(RegistroVenta $registroVenta, bool $flush)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($registroVenta);
+        if ($flush) {
+            $em->flush();
+        }
+    }
+
 //    /**
 //     * @return RegistroVenta[] Returns an array of RegistroVenta objects
 //     */

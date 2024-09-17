@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Proveedores{% endblock %}
+{% block title %}Ventas{% endblock %}
 
 {# {% block stylesheets %}
 {{parent()}}
@@ -270,7 +270,6 @@
     botonFinalizar.addEventListener("click", function () {
         total = actualizarTotal();
         if (total!=0){      
-                alert("enviado");      
                 $.ajax({
                 url: "{{ path('app_registrar_venta_ajax') }}",
                 method: 'POST',
@@ -278,6 +277,7 @@
                 dataType: 'json',
                 success: function (response) {                
                     console.log("Orden de compra: ",response);
+                    window.location.reload();
                 },
                 error: function (xhr, status, error) {
                     console.error('Error:', error);

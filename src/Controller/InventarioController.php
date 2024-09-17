@@ -7,6 +7,7 @@ use App\Form\ProductoCargaType;
 use App\Repository\ProductoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -24,13 +25,13 @@ class InventarioController extends AbstractController
     }
 
     #[Route('/carga', name: 'app_inventario_carga', methods: ['GET', 'POST'])]
-    public function carga(Request $request, ProductoRepository $productoRepository, EntityManagerInterface $entityManager): Response
+    public function carga(Request $request, ProductoRepository $productoRepository): Response
     {
         $productoId = $request->get('productoId');
-        $stock_total= $request->get('stock_total');   
+        $cantidad= $request->get('stock_agregado');        
         $producto = $productoRepository->find($productoId);
-
-        $producto->setStock($stock_total);        
-        $entityManager->flush();
+        $producto->aumentarStock($cantidad);
+        $productoRepository->agregar($producto, true);
+        return $this->json($producto);
     }
 }

@@ -111,7 +111,7 @@ class Producto
     public function aumentarStock(int $cantidadCargada): static
     {
         $actual = $this->stock;
-        $this->stock = $actual - $cantidadCargada;
+        $this->stock = $actual + $cantidadCargada;
 
         return $this;
     }
@@ -119,7 +119,7 @@ class Producto
     public function bajarStock(int $cantidadVendida): static
     {
         $actual = $this->stock;
-        $this->stock = $actual- $cantidadVendida;
+        $this->stock = $actual - $cantidadVendida;
 
         return $this;
     }

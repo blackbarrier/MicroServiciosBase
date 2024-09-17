@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Producto;
+use App\Entity\RegistroVenta;
 use App\Repository\ProductoRepository;
+use App\Repository\RegistroVentaRepository;
+use DateTime;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,18 +36,54 @@ class VentaController extends AbstractController
     }
 
     #[Route('/registrarVenta', name: 'app_registrar_venta_ajax', methods: ['POST'])]
-    public function registrarVenta(Request $request, ProductoRepository $productoRepository)
+    public function registrarVenta(Request $request, ProductoRepository $productoRepository, RegistroVentaRepository $registroVentaRepository)
     {
         $carrito = $request->get('carrito');
+    
+        $total = $request->get('total'); //Utilizo el total de la venta. No el parcial de cada producto.
+        $productos=[];
 
         foreach ($carrito as $item) {
-            $producto = $productoRepository->find($item["producto"]["id"]);
+            $producto = $productoRepository->find($item["producto"]["id"]);            
+            //ModificaStock
             $cantidadVendida = $item["cantidad"];
             $producto->bajarStock($cantidadVendida);
-
             $productoRepository->agregar($producto, true);
-            //Sumar ingresos(despues)
+
+            //Crea variable para RegistroVenta
+            $productos[] = [
+                "id" =>  $producto->getId(),
+                "cantidad" => $cantidadVendida,
+                "subtotal" => $producto->getPrecio() * $cantidadVendida
+            ]        ;
         }
+        
+
+        $venta = new RegistroVenta;
+        $hoy = new DateTime();
+        $venta->setProductos($productos);
+        $venta->setMontoTotal($total);
+        $venta->setFecha($hoy);
+        $registroVentaRepository->agregar($venta, true);
+
         return $this->json($carrito);
     }
+
+    #[Route('/cierreCaja', name: 'app_cierre_caja', methods: ['GET'])]
+    public function cerrarCaja()
+    {
+
+        return $this->render('venta/cierreCaja.html.twig',[
+            
+        ]);
+      
+    }
+
+    #[Route('/consultarCierres', name: 'app_consulta_cierres', methods: ['GET'])]
+    public function consultarCierres()
+    {
+       
+    }
+
+
 }
