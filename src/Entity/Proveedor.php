@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProveedorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProveedorRepository::class)]
@@ -27,6 +29,17 @@ class Proveedor
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cuit = null;
+
+    /**
+     * @var Collection<int, Pago>
+     */
+    #[ORM\OneToMany(targetEntity: Pago::class, mappedBy: 'proveedor')]
+    private Collection $pagos;
+
+    public function __construct()
+    {
+        $this->pagos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +102,36 @@ class Proveedor
     public function setCuit(?string $cuit): static
     {
         $this->cuit = $cuit;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pago>
+     */
+    public function getPagos(): Collection
+    {
+        return $this->pagos;
+    }
+
+    public function addPago(Pago $pago): static
+    {
+        if (!$this->pagos->contains($pago)) {
+            $this->pagos->add($pago);
+            $pago->setProveedor($this);
+        }
+
+        return $this;
+    }
+
+    public function removePago(Pago $pago): static
+    {
+        if ($this->pagos->removeElement($pago)) {
+            // set the owning side to null (unless already changed)
+            if ($pago->getProveedor() === $this) {
+                $pago->setProveedor(null);
+            }
+        }
 
         return $this;
     }

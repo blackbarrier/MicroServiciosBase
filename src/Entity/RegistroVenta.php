@@ -24,6 +24,9 @@ class RegistroVenta
     #[ORM\Column]
     private array $productos = [];
 
+    #[ORM\Column]
+    private ?bool $cerrada = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class RegistroVenta
     public function setProductos(array $productos): static
     {
         $this->productos = $productos;
+
+        return $this;
+    }
+
+    public function isCerrada(): ?bool
+    {
+        return $this->cerrada;
+    }
+
+    public function setCerrada(bool $cerrada): static
+    {
+        $this->cerrada = $cerrada;
 
         return $this;
     }

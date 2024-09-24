@@ -42,52 +42,161 @@
         </div>
     </div> #}
 
-    <div class="card-block">
-        {# <div class="card"> #}       
+    <div class="card-block">        
+        <div class="row">
+
+            <div class="col-6">
+                
+                <h5>Ingresos</h5>
+                <br>
+
+                <div class="card">
+                    <table class="table table-hover dt-responsive nowrap no-footer dtr-inline collapsed">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha y hora</th>
+                                <th>Productos</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set TotalIngresos = 0 %}
+                            {% if ventas %}
+                                {% for venta in ventas %}
+                                <tr>
+                                    <td>{{venta.id}}</td>
+                                    <td>{{venta.fecha|date("d/m/Y H:i:s")}}</td>
+                                    <td>-</td>
+                                    <td>${{venta.montoTotal}}</td>
+                                </tr>
+                                {% set TotalIngresos = TotalIngresos + venta.montoTotal %}
+                                {% endfor %}
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>                                  
+                                        <b>${{TotalIngresos}}</b>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            {% else %}
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4" style="text-align: center;">Sin datos</td>
+                                    </tr>
+                                </tfoot>
+                            {% endif %}                            
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
         
+            <div class="col-6">
+                <h5>Egresos</h5>
+                <br>
+                <div class="card">
+                    <table class="table table-hover dt-responsive nowrap no-footer dtr-inline collapsed">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha y hora</th>
+                                <th>Proveedor</th>
+                                <th>Total</th>                 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set TotalEgresos = 0 %}
+                            {% if gastos %}                                
+                                {% for gasto in gastos %}
+                                <tr>
+                                    <td>{{gasto.id}}</td>
+                                    <td>{{gasto.fecha|date("d/m/Y H:i:s")}}</td>
+                                    <td>{{gasto.proveedor.nombre}}</td>
+                                    <td>${{gasto.monto}}</td>
+                                </tr>                    
+                                {% set TotalEgresos = TotalEgresos + gasto.monto %}
+                                {% endfor %}
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <b>${{TotalEgresos}}</b>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                {% else %}
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4" style="text-align: center;">Sin datos</td>
+                                    </tr>
+                                </tfoot>
+                                {% endif %}
+                        </tbody>             
+                    </table>
+                </div>
+            </div>
 
-        <br>
-        <br>
-        <br>
-
-        <table id="tablaVentas" class="table table-hover dt-responsive nowrap no-footer dtr-inline collapsed">
-            <thead>
-                <tr>
-                    <th>Cod.</th>
-                    <th>Nombre</th>
-                    <th>Cant.</th>
-                    <th>Precio unitario</th>                 
-                    <th>Subtotal</th>                 
-                    <th></th>                 
-                </tr>
-            </thead>
-            <tbody id="productList">         
-            </tbody>
-            {# <tfoot>                        
-                <tr>
-                    <th></th>                   
-                    <th></th>                   
-                    <th></th> 
-                    <th></th> 
-                    <th id="totalVenta" style="text-align: left;"></th>
-                    <th><button type="text" class="form-control btn btn-primary" id="botonFinalizar">Cobrar</button></th>                   
-                </tr>
-            </tfoot> #}
-        </table>
-        {# </div> #}
-        <br>
-        <br>
-        <br>
-        <hr>
-
-        <div class="row" style="align-items: center">
-            <div class="col-8"></div>
-            <div class="col-2" id="totalVenta"><h4>Total: $0</h4></div>
-            <div class="col-2"><button type="text" class="form-control btn btn-primary" id="botonFinalizar">Cobrar</button></div>
         </div>
 
-    </div>
+        <div class="card">
+            <div class="col-12">
 
+                <table class="table table-hover dt-responsive nowrap no-footer dtr-inline collapsed" >
+                    <tfoot>
+                        <tr>
+                            <th colspan="5">
+                                Informe del día
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="text-muted">                                   
+                                        Ingresos:                                     
+                                </label>
+                                <label class="text-success">
+                                    <h4>${{TotalIngresos}}</h4>
+                                </label>
+                            </td>
+                            <td>
+                                <label class="text-muted">
+                                        Gastos:
+                                </label>
+                                <label class="text-danger">
+                                    <h5>${{TotalEgresos}}</h5>
+                                </label>
+                            </td>
+                            <td>
+                                <label class="text-muted">
+                                    Balance:
+                                </label>
+                                {% set balance = TotalIngresos - TotalEgresos %}
+                                {% if balance > 0 %}
+                                    <label class="text-success">
+                                        <h4>${{balance}}</h4>
+                                    </label>
+                                {% else %}
+                                    {% set balance = balance * -1 %}
+                                    <label class="text-danger">
+                                        <h4>- ${{balance}}</h4>
+                                    </label>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            {% include "venta/_form.html.twig" %}                         
+                        </tr>
+                    </tfoot>                   
+                </table>           
+                
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -97,4 +206,37 @@
 
 {% block javascripts %}
 {{ parent() }}
+<script>
+    setTimeout(function () {
+        $('#tablaCierreCaja').DataTable({
+            "responsive": true,
+            "autoWidth": true,
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrando _MENU_ productos",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando productos del _START_ al _END_ de un total de _TOTAL_ productos",
+                "sInfo": '',
+                "sInfoEmpty": "Mostrando productos del 0 al 0 de un total de 0 productos",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ productos)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    // "sFirst": "Primero",
+                    // "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+    }, 100);
+</script>
 {% endblock %}

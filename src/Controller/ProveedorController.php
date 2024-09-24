@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Pago;
 use App\Entity\Proveedor;
+use App\Form\PagoType;
 use App\Form\ProveedorType;
+use App\Repository\PagoRepository;
 use App\Repository\ProveedorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -79,4 +82,5 @@ class ProveedorController extends AbstractController
 
         return $this->redirectToRoute('app_proveedor_index', [], Response::HTTP_SEE_OTHER);
     }
+    
 }

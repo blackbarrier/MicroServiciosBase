@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+
+{# <th style="vertical-align:middle" class="tabledit-view-mode"> {{ form_widget(form.fecha, {'attr': {'class': 'form-control'}}) }} </th> #}
+<th style="vertical-align:middle" > {{ form_widget(form.fecha, {'attr': {'class': 'form-control'}}) }} </th>
+<td style="vertical-align:middle" > {{ form_widget(form.observaciones, {'attr': {'class': 'form-control'}}) }} </td>
+<td style="vertical-align:middle" > {{ form_widget(form.balance, {'attr': {'class': 'form-control'}}) }} </td>
+<th style="vertical-align:middle" ><button class="btn btn-primary" type="submit">Cerrar caja</button></th>
+
+
+{{ form_end(form) }}
