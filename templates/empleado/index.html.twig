@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personal{% endblock %}
+
+{# {% block stylesheets %}
+{{parent()}}
+{% endblock %} #}
+
+
+{% block pageHeader %}
+<div class="card-block">
+    <h5 class="m-b-10">Personal</h5>
+    <p class="text-muted m-b-10">Administre el personal en servicio. De de alta nuevos empleados o modifique datos de existentes.</p>
+    {# <ul class="breadcrumb-title b-t-default p-t-10">
+        <li class="breadcrumb-item">
+            <a href="index.html"> <i class="fa fa-home"></i> </a>
+        </li>
+        <li class="breadcrumb-item"><a href="#!">Comunicarse soporte</a>
+        </li>
+    </ul> #}
+</div>
+{% endblock %}
+
+
+{% block pageBody %}
+
+<div class="card">
+
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                <h5>Personal registrado</h5>
+            </div>
+            <div class="col-2">
+                <a href="{{path('app_empleado_new')}}"><button type="button"
+                        class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger"
+                        data-modal="modal-13"> <i class="icofont icofont-plus m-r-5"></i>Alta de empleado</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-block">
+
+        <table id="tablaEmpleado" class="table table-striped dt-responsive nowrap no-footer dtr-inline collapsed">
+            <thead>
+                <tr>
+                    {# <th>Legajo</th> #}
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for empleado in empleados %}
+                <tr>
+
+                    {# <td class="pro-list-img" tabindex="0">
+                        {{ empleado.legajo }}
+                    </td> #}
+
+                    <td class="pro-name">
+                        <h6>{{ empleado.nombre }}</h6>
+                    </td>
+                    <td class="pro-name">
+                        <h6>{{ empleado.dni }}</h6>
+                    </td>
+
+                    <td class="dt-type-text">
+                        {{ empleado.direccion }}
+                    </td>
+                    <td class="dt-type-text">
+                        {{ empleado.telefono }}
+                    </td>
+                    <td class="dt-type-text">
+                        {{ empleado.estado.nombre }}
+                    </td>
+
+                    <td class="action-icon">
+                        <div class="row">
+                            <a href="{{ path('app_empleado_edit', {'id': empleado.id}) }}" class="m-r-15 text-muted"
+                                data-toggle="tooltip" data-placement="top" title="" data-original-title="Editar"><i
+                                    class="icofont icofont-ui-edit"></i></a>
+                            {# <form method="post" action="{{ path('app_empleado_delete', {'id': empleado.id}) }}"
+                                onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ empleado.id) }}">
+                                <button type="submit" class="m-r-15 text-muted" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="Eliminar"
+                                    style="border: none; background-color: transparent"><i
+                                        class="icofont icofont-delete-alt"></i></button>
+                            </form> #}
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">No se encontraron registros</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    setTimeout(function () {
+
+        $('#tablaEmpleado').DataTable({
+            "responsive": true,
+            "autoWidth": true,
+            "language": {
+                "sProcessing": "Procesando...",
+                // "sLengthMenu": "Mostrando _MENU_ productos",
+                "sLengthMenu": '',
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando productos del _START_ al _END_ de un total de _TOTAL_ productos",
+                "sInfo": '',
+                "sInfoEmpty": "Mostrando productos del 0 al 0 de un total de 0 productos",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ productos)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    // "sFirst": "Primero",
+                    // "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+    }, 100);
+</script>
+{% endblock %}

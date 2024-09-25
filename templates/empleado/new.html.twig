@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personal{% endblock %}
+
+{% block stylesheets %}
+{{parent()}}
+{% endblock %}
+
+
+{% block pageHeader %}
+<div class="card-block">
+    <div class="row">
+        <div class="col">
+            <h5 class="m-b-10">Dar de alta nuevo empleado</h5>
+            <p class="text-muted m-b-10">Agregue un nuevo empleado para incorporarlo al sistema</p>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <a href="{{path('app_empleado_index')}}"><button type="button"
+                    class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger"
+                    data-modal="modal-13">
+                    <i class="fa fa-mail-reply"></i>Volver</button>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block pageBody %}
+
+<div class="card">
+
+    <div class="card-header">
+        <h5>Ingrese los datos solicitados</h5>
+        {# <a href="{{path('app_productos_new')}}"><button type="button"
+                class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger" data-modal="modal-13">
+                <i class="icofont icofont-plus m-r-5"></i>Agregar producto</button></a> #}
+    </div>
+
+    <div class="card-block">
+        {{ include('empleado/_form.html.twig') }}
+    </div>
+</div>
+
+
+{% endblock %}

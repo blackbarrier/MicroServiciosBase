@@ -176,15 +176,15 @@
                                     Balance:
                                 </label>
                                 {% set balance = TotalIngresos - TotalEgresos %}
-                                {% if balance > 0 %}
-                                    <label class="text-success">
-                                        <h4>${{balance}}</h4>
-                                    </label>
+                                {% if balance < 0 %}
+                                {% set balance = balance * -1 %}
+                                <label class="text-danger">
+                                    <h4>- ${{balance}}</h4>
+                                </label>
                                 {% else %}
-                                    {% set balance = balance * -1 %}
-                                    <label class="text-danger">
-                                        <h4>- ${{balance}}</h4>
-                                    </label>
+                                <label class="text-success">
+                                    <h4>${{balance}}</h4>
+                                </label>
                                 {% endif %}
                             </td>
                         </tr>
