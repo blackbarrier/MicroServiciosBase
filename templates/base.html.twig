@@ -46,6 +46,9 @@
          #select2-select-hi-container > .select2-selection__arrow{
             height:34px;
         } */
+        .img-nav{
+            height:3em;
+        }
     </style>
     {% endblock %}
 </head>
@@ -66,8 +69,12 @@
                 <div class="navbar-wrapper">
                     <div class="navbar-logo">
 
+                        {# <a class="mobile-menu" id="mobile-collapse" href="#!"></a>
+                            <i class="ti-menu"></i>
+                        </a> #}
+
                             <a href="{{path('app_index')}}">                           
-                                <img class="img-fluid" src="{{asset('images/MicroServicios/TransparentLogoWhite.png')}}" alt="MicroServicios" />                          
+                                <img class="img-nav" src="{{asset('images/MicroServicios/TransparentLogoWhite.png')}}" alt="MicroServicios" />                          
                             </a>
                         
                         
@@ -117,7 +124,7 @@
                         </ul>
                         <ul class="nav-right">
                             <li class="header-notification">
-                                <a href="#!">
+                                {# <a href="#!">
                                     <i class="ti-bell"></i>
                                     <span class="badge bg-c-pink"></span>
                                 </a>
@@ -136,14 +143,14 @@
                                             </div>
                                         </div>
                                     </li>                                    
-                                </ul>
+                                </ul> #}
                             </li>
-                            <li class="">
+                            {# <li class="">
                                 <a href="#!" class="displayChatbox">
                                     <i class="ti-comments"></i>
                                     <span class="badge bg-c-green"></span>
                                 </a>
-                            </li>
+                            </li> #}
                             <li class="user-profile header-notification">
                                 <a href="#!">
                                     <img src="{{asset('HTML/Template/files/assets/images/avatar-4.jpg')}}" class="img-radius" alt="User-Profile-Image">
@@ -368,17 +375,17 @@
                                     </a>
                                 </li>
  
-                                <li class=" ">
+                                {# <li class=" ">
                                     <a href="#">
                                         <span class="pcoded-micon"><i class="ti-layers-alt"></i><b>S</b></span>
                                         <span class="pcoded-mtext">Asistencias</span>
                                         <span class="pcoded-badge label label-danger">HOT</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
-                                </li>
+                                </li> #}
                             </ul>
 
-                            <div class="pcoded-navigation-label">Contabilidad</div>
+                            {# <div class="pcoded-navigation-label">Contabilidad</div>
                             <ul class="pcoded-item pcoded-left-item">                            
  
                                 <li class=" ">
@@ -390,7 +397,7 @@
                                     </a>
                                 </li> 
                                
-                            </ul>
+                            </ul> #}
               
 
                         </div>
@@ -435,9 +442,9 @@
                                 </div>
                             </div>
                             <!-- Main-body end -->
-                            <div id="styleSelector">
+                            {# <div id="styleSelector">
 
-                            </div>
+                            </div> #}
                         </div>
                     </div>
                 </div>

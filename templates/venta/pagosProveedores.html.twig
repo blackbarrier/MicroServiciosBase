@@ -29,16 +29,19 @@
     
     <div class="card-block">
         {{form_start(form)}}
-        <div class="row">
+        <div class="row" style="align-items: end;">
 
             <div class="col">
-                {{ form_widget(form.fecha, {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.fecha) }}
+                {{ form_widget(form.fecha) }}
             </div>
             <div class="col">
-                {{ form_widget(form.proveedor, {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.proveedor) }}
+                {{ form_widget(form.proveedor) }}
             </div>
             <div class="col">
-                {{ form_widget(form.monto, {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.monto) }}
+                {{ form_widget(form.monto) }}
             </div>
             <div class="col">
                 <button class="btn btn-primary" type="submit">Registrar pago</button>

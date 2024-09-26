@@ -20,14 +20,17 @@ class PagoType extends AbstractType
             ->add('fecha', DateTimeType::class, [
                 'widget' => 'single_text',
                 'data' => new \DateTime(),
+                "label" => "Fecha y hora del pago",
                 'attr' => [
-                    // 'readonly' => true
-                ]
+                    "class" => "form-control",
+                    ]
             ])
 
             ->add('monto', MoneyType::class, [
+            "label" => "Monto",
                 'currency' => false,
                 'attr' => [
+                "class" => "form-control",
                     'placeholder' => "$"
                 ],
                 'scale' => 2, // Dos decimales de precisión
@@ -35,9 +38,13 @@ class PagoType extends AbstractType
             ])
 
             ->add('proveedor', EntityType::class, [
+            "label" => "Proveedor",
                 'class' => Proveedor::class,
                 'choice_label' => 'nombre',
                 'placeholder' => 'Seleccione un proveedor',
+                'attr' => [
+                    "class" => "form-control",
+                ],
             ])
         ;
     }

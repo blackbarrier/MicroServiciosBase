@@ -28,17 +28,19 @@
 <div class="card">
 
     <div class="card-header">
-        <div class="row">
-            <div class="col">
+
+        <div class="col">
+            <div class="row justify-content-between">
+                
                 <h5>Listado de productos</h5>
-            </div>
-            <div class="col-2">
                 <a href="{{path('app_producto_new')}}"><button type="button"
-                        class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger" data-modal="modal-13"> <i
-                            class="icofont icofont-plus m-r-5"></i> Agregar nuevo producto</button>
-                </a>
+                    class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger" data-modal="modal-13"> <i
+                    class="icofont icofont-plus m-r-5"></i> Agregar nuevo producto</button>
+                </a>                
+                
             </div>
         </div>
+
     </div>
     
     <div class="card-block">
@@ -115,8 +117,7 @@
             "autoWidth": true,            
             "language": {
                 "sProcessing": "Procesando...",
-                // "sLengthMenu": "Mostrando _MENU_ productos",
-                "sLengthMenu": '',
+                "sLengthMenu": "Mostrando _MENU_ productos",
                 "sZeroRecords": "No se encontraron resultados",
                 "sEmptyTable": "Ningún dato disponible en esta tabla",
                 "sInfo": "Mostrando productos del _START_ al _END_ de un total de _TOTAL_ productos",
