@@ -47,37 +47,38 @@
 
             <tbody>
 
+                {% if productos %}                                    
+                    {% for producto in productos %}
+                    <tr>                   
+                        <td>{{ producto.codigo }}</td>
+                        <td class="pro-name">
+                            <h6>{{ producto.nombre }}</h6>
+                            <span>{{ producto.descripcion }}</span>
+                        </td>                  
+                        <td>
+                            {% if producto.stock > 20 %}
 
-                {% for producto in productos %}
-                <tr>                   
-                    <td>{{ producto.codigo }}</td>
-                    <td class="pro-name">
-                        <h6>{{ producto.nombre }}</h6>
-                        <span>{{ producto.descripcion }}</span>
-                    </td>                  
-                    <td>
-                        {% if producto.stock > 20 %}
-
-                        <label class="text-success"><h4>{{producto.stock}}</h4></label>
-                        {% elseif producto.stock <= 20 and producto.stock !=0 %}
-                        <label class="text-warning"><h4>{{producto.stock}}</h4></label>                            
-                        {% elseif producto.stock == 0 %}
-                        <label class="text-danger"><h4>Sin stock</h4></label>
-                        {% endif %}
-                    </td>
-                    <td class="action-icon">
-                        <div class="row">
-                            <a href="#"><button type="button"
-                                    class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger" data-modal="modal-13"  onclick="modalCarga({{producto.stock}} , {{producto.id}} )">
-                                    <i class="icofont icofont-plus m-r-5"></i></button></a>
-                        </div>
-                    </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="4">No se encontraron registros</td>
-                </tr>
-                {% endfor %}
+                            <label class="text-success"><h4>{{producto.stock}}</h4></label>
+                            {% elseif producto.stock <= 20 and producto.stock !=0 %}
+                            <label class="text-warning"><h4>{{producto.stock}}</h4></label>                            
+                            {% elseif producto.stock == 0 %}
+                            <label class="text-danger"><h4>Sin stock</h4></label>
+                            {% endif %}
+                        </td>
+                        <td class="action-icon">
+                            <div class="row">
+                                <a href="#"><button type="button"
+                                        class="btn btn-primary waves-effect waves-light f-left d-inline-block md-trigger" data-modal="modal-13"  onclick="modalCarga({{producto.stock}} , {{producto.id}} )">
+                                        <i class="icofont icofont-plus m-r-5"></i></button></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No se encontraron registros</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
 
             </tbody>
 

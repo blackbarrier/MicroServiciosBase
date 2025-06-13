@@ -57,52 +57,52 @@
             </thead>
 
             <tbody>
+                    {% if empleados %}                               
+                        {% for empleado in empleados %}
+                        <tr>
+                            {# <td class="pro-list-img" tabindex="0">
+                                {{ empleado.legajo }}
+                            </td> #}
 
-                {% for empleado in empleados %}
-                <tr>
+                            <td class="pro-name">
+                                <h6>{{ empleado.nombre }}</h6>
+                            </td>
+                            <td class="pro-name">
+                                <h6>{{ empleado.dni }}</h6>
+                            </td>
 
-                    {# <td class="pro-list-img" tabindex="0">
-                        {{ empleado.legajo }}
-                    </td> #}
+                            <td class="dt-type-text">
+                                {{ empleado.direccion }}
+                            </td>
+                            <td class="dt-type-text">
+                                {{ empleado.telefono }}
+                            </td>
+                            <td class="dt-type-text">
+                                {{ empleado.estado.nombre }}
+                            </td>
 
-                    <td class="pro-name">
-                        <h6>{{ empleado.nombre }}</h6>
-                    </td>
-                    <td class="pro-name">
-                        <h6>{{ empleado.dni }}</h6>
-                    </td>
-
-                    <td class="dt-type-text">
-                        {{ empleado.direccion }}
-                    </td>
-                    <td class="dt-type-text">
-                        {{ empleado.telefono }}
-                    </td>
-                    <td class="dt-type-text">
-                        {{ empleado.estado.nombre }}
-                    </td>
-
-                    <td class="action-icon">
-                        <div class="row">
-                            <a href="{{ path('app_empleado_edit', {'id': empleado.id}) }}" class="m-r-15 text-muted"
-                                data-toggle="tooltip" data-placement="top" title="" data-original-title="Editar"><i
-                                    class="icofont icofont-ui-edit"></i></a>
-                            {# <form method="post" action="{{ path('app_empleado_delete', {'id': empleado.id}) }}"
-                                onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ empleado.id) }}">
-                                <button type="submit" class="m-r-15 text-muted" data-toggle="tooltip"
-                                    data-placement="top" title="" data-original-title="Eliminar"
-                                    style="border: none; background-color: transparent"><i
-                                        class="icofont icofont-delete-alt"></i></button>
-                            </form> #}
-                        </div>
-                    </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="6">No se encontraron registros</td>
-                </tr>
-                {% endfor %}
+                            <td class="action-icon">
+                                <div class="row">
+                                    <a href="{{ path('app_empleado_edit', {'id': empleado.id}) }}" class="m-r-15 text-muted"
+                                        data-toggle="tooltip" data-placement="top" title="" data-original-title="Editar"><i
+                                            class="icofont icofont-ui-edit"></i></a>
+                                    {# <form method="post" action="{{ path('app_empleado_delete', {'id': empleado.id}) }}"
+                                        onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ empleado.id) }}">
+                                        <button type="submit" class="m-r-15 text-muted" data-toggle="tooltip"
+                                            data-placement="top" title="" data-original-title="Eliminar"
+                                            style="border: none; background-color: transparent"><i
+                                                class="icofont icofont-delete-alt"></i></button>
+                                    </form> #}
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6">No se encontraron registros</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
 
             </tbody>
 
